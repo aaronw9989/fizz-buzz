@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
+
+
+group 'com.tlglearning'
+version '1.0-SNAPSHOT'
+
+repositories {
+    // Note: Maven is a clearing house of libraries and also a tool we can use to manage builds
+    // Amazon has it's own maven repository
+    // mvnrepository.com - website to show you how to access dependencies
+    // Enterprise projects more tilted towards maven
+    // Android projects must be in gradle
+    // Gradle has been around since 2012
+    // JetBrains is a big supporter of Gradle
+    // Gradle and Maven are similar to NPN - they manage packages and build
+    // ANT is an older java build tool
+    // commons.apache.org - apache libraries we can use to enhance projects
+    // CLI and CSV are two very popular apache libraries
+    mavenCentral() // calls mvnrepository.com to download our dependencies
+}
+
+// This is where gradle downloads the dependencies for us
+dependencies {
+
+    // implementation means this is a library we need to run our code
+    implementation 'commons-cli:commons-cli:1.5.0'
+
+    // in groovy scripts we can use type inference i.e. use def and it infers a string
+    def junitVersion = '5.8.2'
+    // Note: in groovy we use double quotes for string interpolation!
+    // The $ marks where were we do our interpolation
+    testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+    // run time means it's not needed for compile time but only for runtime
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+
+}
+
+test {
+    useJUnitPlatform()
+}
