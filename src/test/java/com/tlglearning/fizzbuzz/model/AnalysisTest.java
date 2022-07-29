@@ -52,19 +52,17 @@ class AnalysisTest {
   @ParameterizedTest
   @ValueSource(ints = {-1, -3, -5, -15})
   void analyze_negative(int value) {
-    // we can see the class inside the method because it's a non-static class
-    // inside of a non-static method
-    class InvalidInvocation implements Executable {
-      private final int value;
-      public InvalidInvocation(int value) {
-        this.value = value;
-      }
+    // Declaration with assignment statement
+    // This is an anonymous class
+    // We create an instance of the anonymous class at the same time
+    Executable invalidInvocation = new Executable() {
+
       // NOTE: we need to use the execute method
       @Override
       public void execute() throws Throwable {
         analysis.analyze(value);
       }
-    }
-    assertThrows(IllegalArgumentException.class, new InvalidInvocation(value));
+    };
+    assertThrows(IllegalArgumentException.class, invalidInvocation);
   }
 }
