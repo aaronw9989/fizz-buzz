@@ -55,14 +55,12 @@ class AnalysisTest {
     // Declaration with assignment statement
     // This is an anonymous class
     // We create an instance of the anonymous class at the same time
-    Executable invalidInvocation = new Executable() {
-
+    assertThrows(IllegalArgumentException.class, new Executable() {
       // NOTE: we need to use the execute method
       @Override
       public void execute() throws Throwable {
         analysis.analyze(value);
       }
-    };
-    assertThrows(IllegalArgumentException.class, invalidInvocation);
+    });
   }
 }
