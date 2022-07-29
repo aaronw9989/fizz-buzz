@@ -14,12 +14,12 @@ class AnalysisTest {
 
   static final Set<State> fizzExpected = EnumSet.of(State.FIZZ);
 
- private static Analysis analysis;
+  final static Analysis analysis = new Analysis();
 
-  @BeforeEach
-  void setUp() {
-    analysis = new Analysis();
-  }
+//  @BeforeEach
+//  void setUp() {
+//    analysis = new Analysis();
+//  }
 
   // We want this test to receive parameters, once for each test case.
   @ParameterizedTest
@@ -62,21 +62,7 @@ class AnalysisTest {
 //    }
 
     // assert throws gives junit an object that it can then invoke
-    assertThrows(IllegalArgumentException.class, new InvalidInvocation(value));
+    assertThrows(IllegalArgumentException.class, new InvalidInvocation(analysis, value));
   }
 
-  private static class InvalidInvocation implements Executable {
-
-    private final int value;
-
-    public InvalidInvocation(int value) {
-      this.value = value;
-    }
-
-    @Override
-    public void execute() throws Throwable {
-      analysis.analyze(value);
-    }
-
-  }
 }
