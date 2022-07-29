@@ -52,15 +52,12 @@ class AnalysisTest {
   @ParameterizedTest
   @ValueSource(ints = {-1, -3, -5, -15})
   void analyze_negative(int value) {
-    // Declaration with assignment statement
-    // This is an anonymous class
-    // We create an instance of the anonymous class at the same time
-    assertThrows(IllegalArgumentException.class, new Executable() {
-      // NOTE: we need to use the execute method
-      @Override
-      public void execute() throws Throwable {
-        analysis.analyze(value);
-      }
-    });
+
+    // NOTE: we need to use execute() method
+    // Executable is an abstract class with one method execute()
+
+    // -> is the lambda operator
+    // this is an expression lambda, it expands during compile time
+    assertThrows(IllegalArgumentException.class, () -> analysis.analyze(value));
   }
 }
