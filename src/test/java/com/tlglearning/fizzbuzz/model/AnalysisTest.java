@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.EnumSet;
 import java.util.Set;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -14,7 +13,7 @@ class AnalysisTest {
 
   static final Set<State> fizzExpected = EnumSet.of(State.FIZZ);
 
-  final static Analysis analysis = new Analysis();
+  final Analysis analysis = new Analysis();
 
 //  @BeforeEach
 //  void setUp() {
@@ -53,16 +52,22 @@ class AnalysisTest {
   @ParameterizedTest
   @ValueSource(ints = {-1, -3, -5, -15})
   void analyze_negative(int value) {
-    // fail(); recommended stub practice for methods, have them fail first
-//    try {
-//        analysis.analyze(value);
-//        fail();
-//    } catch(IllegalArgumentException e) {
-//      // Do nothing; this is the expected behavior.
-//    }
-
-    // assert throws gives junit an object that it can then invoke
-    assertThrows(IllegalArgumentException.class, new InvalidInvocation(analysis, value));
+    assertThrows(IllegalArgumentException.class, new InvalidInvocation(value));
   }
 
+  class InvalidInvocation implements Executable {
+
+    private final int value;
+
+    public InvalidInvocation(int value) {
+      this.value = value;
+    }
+
+    // NOTE: we need to use the execute method
+    @Override
+    public void execute() throws Throwable {
+      analysis.analyze(value);
+    }
+
+  }
 }
